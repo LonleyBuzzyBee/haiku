@@ -10,19 +10,40 @@ const storeState = (poem) => {
 // const consonantArray = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
 
 const syllablesCount = (line) => {
-  const vowelArray = ["a", "e", "i", "o", "u"];
+  const vowelArray = ["a", "e", "i", "o", "u", "y"];
   let wordArray = line.split(" "); //split on spaces
+  console.log(wordArray);
   let syllables = 0;
   wordArray.forEach(word => {
     let charArray = word.split('');
-    charArray.forEach(char => {
-      let i = word.indexOf(char);
-      // if char is a vowel && the letter before it is not also a vowel && if char is not a final silent "e"
-      if ((vowelArray.includes(char) && (!(vowelArray.includes(word[i-1]))) && (!((char == "e") && (word.length == i+1))))) 
-      {
-        syllables = + 1;
+    console.log(charArray);
+    // charArray.forEach(char => {
+      for(let i = 0; i < charArray.length; i++){
+        console.log(charArray[i]);
+        let char = charArray[i];
+        if (char == "y"){
+          
+        }
+        else if (char == "e"){
+          if (charArray.length <=3) {
+            syllables += 1;
+          }
+          else if (charArray[i-1] == "l") {
+            syllables += 1;
+          }
+          else if (charArray.length < i+1) {
+            syllables += 0;
+          }
+          else if () //if e is the last letter, it doesn't add a syllable
+          //unless the word is 3 letters or less, like "be" or "the"
+          //or if the word ends in "le"
+        }
+        else if (vowelArray.includes(char) && !vowelArray.includes(charArray[i-1])){
+          console.log(vowelArray.includes(char[i - 1]));
+          console.log(vowelArray.includes(charArray[i - 1]));
+          syllables += 1;
+        }  
       }
-    });
   });   
   console.log(syllables);
   return syllables;    
