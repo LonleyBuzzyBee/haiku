@@ -7,10 +7,8 @@ const storeState = (poem) => {
   };
 };
 
-// const consonantArray = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
-
 const syllablesCount = (line) => {
-  const vowelArray = ["a", "e", "i", "o", "u", "y"];
+  const vowelArray = ["a", "e", "i", "o", "u"];
   let wordArray = line.split(" "); //split on spaces
   console.log(wordArray);
   let syllables = 0;
@@ -21,26 +19,42 @@ const syllablesCount = (line) => {
       for(let i = 0; i < charArray.length; i++){
         console.log(charArray[i]);
         let char = charArray[i];
+        //y is a vowel & constitutes a new syllable if and only if it is surrounded by consonants or at the end
         if (char == "y"){
-          
+          if (charArray.length == i +1) {
+            if (vowelArray.includes(charArray[i-1])) {
+              syllables += 0;
+            }
+            else {
+              syllables += 1;
+            }
+          }
+          else {
+            if (vowelArray.includes(charArray[i-1]) || vowelArray.includes(charArray[i+1])) {
+              syllables += 0;
+            }
+            else {
+              syllables += 1;
+            }
+          }
         }
-        else if (char == "e"){
-          if (charArray.length <=3) {
+        else if (char == "e") {
+          if (charArray[i-1] == "l") {
             syllables += 1;
           }
-          else if (charArray[i-1] == "l") {
+          else if (charArray.length == i+1) {
+            if (charArray.length <=3 && (!vowelArray.includes(charArray[i-1]) && !vowelArray.includes(charArray[i-2]))) {
+              syllables += 1;
+            }
+            else {
+              syllables +=0;
+            }
+          }
+          else if (!vowelArray.includes(charArray[i-1])){
             syllables += 1;
-          }
-          else if (charArray.length < i+1) {
-            syllables += 0;
-          }
-          else if () //if e is the last letter, it doesn't add a syllable
-          //unless the word is 3 letters or less, like "be" or "the"
-          //or if the word ends in "le"
+          }         
         }
         else if (vowelArray.includes(char) && !vowelArray.includes(charArray[i-1])){
-          console.log(vowelArray.includes(char[i - 1]));
-          console.log(vowelArray.includes(charArray[i - 1]));
           syllables += 1;
         }  
       }
@@ -49,11 +63,29 @@ const syllablesCount = (line) => {
   return syllables;    
 };
 
-// const isHaiku (poem) => {
-//   //for each line, run syllablesCount
-//   //for line1, if syllables = 1
-// }
+const isHaiku = (line1, line2, line3, haikuBool = true) => {
+  //for each line, run syllablesCount
+  //for line1, if !(syllables = 5) {
+  // return haikuBool = false;
+  // }
 
+  //line 1 - 5 syllables, line 2 - 7 syllables, line 3 - 5 
+  while (haikuBool == true) {
+    // const line1Syllables = syllablesCount(line1);
+    if (line1Syllables == 5) {
+      // const line2Syllables = syllablesCount(line2);
+      if (line2Syllables == 7) {
+        // const line3Syllables = syllablesCount(line3);
+        if (line3Syllables == 5) {
+          return haikuBool = true;
+        }
+      }
+    }
+    else {
+      return haikuBool = false;
+    }
+  }
+}
 
 
 //last in first out
@@ -75,11 +107,15 @@ $(document).ready(function () {
     $("#line1-value").text(poem.line1);
     $("#line2-value").text(poem.line2);
     $("#line3-value").text(poem.line3);
-    const syllables = syllablesCount(poem.line1);
+    const syllables1 = (syllablesCount(poem.line1));
+    const syllables2 = (syllablesCount(poem.line2));
+    const syllables3 = (syllablesCount(poem.line3));
+    const confirm = (isHaiku(syllables1, syllables2, syllables3));
     console.log(poem.line1);
     console.log(poem.line2);
     console.log(poem.line3);
-    console.log("syllables" + syllables);
+  
+    console.log(confirm + "  "+syllables1 + " "+ syllables2 + " " + syllables3);
   });
   // $("#haiku").click(function () {
   // });

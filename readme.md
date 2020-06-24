@@ -17,7 +17,12 @@ wholePoem.split(12 syllables) = lines 1 & 2
 
 remainder - is it 5 syllables? if yes, isHaiku==true; if no (more or less than 5 syllables) isHaiku == false
 
+y is a vowel if:
+1. it follows "s", "c", "j" or "g"; e.g. 'cyst', 'gypsy', 'psychology'
+2. it comes at the end of the word, but not following another vowel e.g., 'city' and 'fully' but not 'play'
+3. if there are no other vowels; e.g. "why", "wry", "fly", 
 
+y is a vowel & constitutes a new syllable if and only if it is surrounded by consonants or at the end
 
 
 Basic Syllable Rules
